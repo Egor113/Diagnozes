@@ -49,7 +49,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_Dia">
+       <widget class="QPushButton" name="b_Dia">
         <property name="text">
          <string>Построить диаграмму</string>
         </property>
@@ -85,7 +85,7 @@
      <x>0</x>
      <y>0</y>
      <width>668</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

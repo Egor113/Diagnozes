@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QTableWidgetItem>
+#include "dia.h"
 
 /*!
     \brief Касаемо Графиков
@@ -29,11 +30,13 @@ public:
 
 protected slots:
     void openFile();
+    void showdia();
 
 private:
     Ui::MainWindow *ui;
-
     QTableWidgetItem * m_item;
+    Dia *dia;
+
 };
 
 #endif // MAINWINDOW_H

@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->exitButton, &QPushButton::pressed, this, &MainWindow::close);
     QObject::connect(ui->b_wordRate, &QPushButton::pressed, this, &MainWindow::openFile);
     QObject::connect(ui->b_wordRateDs, &QPushButton::pressed, this, &MainWindow::openFile);
+    QObject::connect(ui->b_Dia,&QPushButton::clicked, this, &MainWindow::showdia);
 
     qRegisterMetaType< QVector<int> >("QVector<int>");
     qRegisterMetaType< QItemSelection > ("QItemSelection");
@@ -59,3 +60,11 @@ void MainWindow::openFile()
         w->start();
     }
 }
+
+void MainWindow::showdia()
+{
+    //if( dia != NULL) delete dia;
+    dia = new Dia();
+    dia->show();
+}
+
