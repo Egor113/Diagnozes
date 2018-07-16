@@ -2,9 +2,14 @@
 
 #include <QDebug>
 
-WordDsRanger::WordDsRanger()
+WordDsRanger::WordDsRanger() : m_dataLength(0)
 {
 
+}
+
+WordDsRanger::~WordDsRanger()
+{
+    // !!!!!!!!!!!!!!!
 }
 
 void WordDsRanger::addRecord(const QString &ds, const QString &word)
@@ -28,14 +33,14 @@ void WordDsRanger::addPair(const QString &ds, const QString &word)
                 if ((*j).first.compare(word, Qt::CaseInsensitive) == 0)
                 {
                     (*j).second++;
-                    found = true;
-                    break;
+                    return;
                 }
             }
 
             if (!found)
             {
                 i->list.append(QPair<QString, int>(word, 1));
+                m_dataLength++;
                 return;
             }
         }
@@ -54,32 +59,29 @@ void WordDsRanger::work()
 
     m_table->clear();
     m_table->setColumnCount(3);
-    m_table->setRowCount(300);
+    m_table->setRowCount(m_dataLength);
 
     int count = 0;
 
 
 qDebug() << count;
 
+for (auto i : m_data)
+{
 
-
-
-    for (auto i : m_data)
+    for (auto j : i->list)
     {
+        auto f = new QTableWidgetItem(i->ds);
+        auto m = new QTableWidgetItem(j.first);
+        auto s = new QTableWidgetItem(QString::number(j.second));
 
-        for (auto j : i->list)
-        {
-            auto f = new QTableWidgetItem(i->ds);
-            auto m = new QTableWidgetItem(j.first);
-            auto s = new QTableWidgetItem(QString::number(j.second));
-
-                        m_table->setItem(count, 0, f);
-                        m_table->setItem(count, 1, m);
-                        m_table->setItem(count, 2, s);
-                        count++;
-        }
-
+        m_table->setItem(count, 0, f);
+        m_table->setItem(count, 1, m);
+        m_table->setItem(count, 2, s);
+        count++;
     }
+
+}
 }
 
 void WordDsRanger::sort()

@@ -33,6 +33,14 @@ Worker *WareHouse::analiseByWord(const QString &fileName)
     if (f.open(QIODevice::ReadOnly))
     {
         QTextStream stream(&f);
+
+        bool firstLine = false;
+        while (!stream.atEnd() && !firstLine)
+        {
+            stream.readLine();
+            firstLine = true;
+        }
+
         while (!stream.atEnd())
         {
             QString s = stream.readLine();
@@ -55,7 +63,7 @@ Worker *WareHouse::analiseByWord(const QString &fileName)
         f.close();
     }
 
-    worker = new Worker(ranger);
+    worker = new Worker(ranger); // НАследник потока (QThread)
 
     return worker;
 }
@@ -103,7 +111,6 @@ Worker *WareHouse::analiseByWordDs(const QString &fileName)
                         if (!j.length())
                             continue;
 
-//                        ranger->addRecord(dia, j);
                         ranger->addPair(dia, j);
                     }
                 }

@@ -1,5 +1,5 @@
 #include "wordranger.h"
-
+#include <QDebug>
 Wordranger::Wordranger()
 {
 
@@ -14,8 +14,7 @@ void Wordranger::addPair(const QString &str)
         if (!(*i).first.compare(str, Qt::CaseInsensitive))
         {
             (*i).second++;
-            founded = true;
-            break;
+            return;
         }
     }
 
@@ -27,6 +26,44 @@ void Wordranger::addPair(const QString &str)
 
 void Wordranger::work()
 {
+    QFile f(this->m_fileName);
+
+    if (!f.exists())
+        return;
+
+    if (f.open(QIODevice::ReadOnly))
+    {
+        QTextStream stream(&f);
+
+        bool firstLine = false;
+        while (!stream.atEnd() && !firstLine)
+        {
+            stream.readLine();
+            firstLine = true;
+        }
+
+        while (!stream.atEnd())
+        {
+            QString s = stream.readLine();
+            QStringList list = s.split(";");
+            QString _s = list.at(13);
+            QStringList _list = _s.split(",", QString::SkipEmptyParts);
+
+            for (auto i : _list)
+            {
+                for (auto j : i.split(QRegExp("\\W+"), QString::SkipEmptyParts))
+                {
+                    if (!j.length())
+                        continue;
+
+                    addPair(j);
+                }
+            }
+        }
+
+        f.close();
+    }
+
     if (!this->m_table)
         return;
 
@@ -35,7 +72,7 @@ void Wordranger::work()
     m_table->setRowCount(m_wordPairs.count());
 
     int count = 0;
-
+    qDebug() << m_wordPairs.count();
     sort();
 
     for (auto i : m_wordPairs)
@@ -47,7 +84,10 @@ void Wordranger::work()
         m_table->setItem(count, 1, s);
 
         count++;
+        qDebug() << count;
     }
+    qDebug() << "Some";
+    emit finished();
 }
 
 void Wordranger::sort()

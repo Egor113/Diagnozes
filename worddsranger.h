@@ -28,8 +28,9 @@ class WordDsRanger : public Builder
 {
 public:
     WordDsRanger();
+    ~WordDsRanger();
 
-    void addRecord(const QString &ds, const QString &word);
+    void addRecord(const QString &ds, const QString &word); // К удалению
     void addPair(const QString &ds, const QString &word);
 
 protected:
@@ -38,10 +39,12 @@ protected:
     void work();
 
 private:
-    QList< QPair<QString, QList< QPair<QString, int> > > > m_wordDsMap;
+    QList< QPair<QString, QList< QPair<QString, int> > > > m_wordDsMap; // К Удалению
     QList<Data*> m_data;
 
     void sort();
+
+    int m_dataLength;
 };
 
 #endif // WORDDSRANGER_H
