@@ -64,6 +64,8 @@ void Wordranger::work()
         f.close();
     }
 
+//Прорисовка таблицы
+
     if (!this->m_table)
         return;
 

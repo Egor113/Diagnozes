@@ -8,6 +8,7 @@
 #include "worker.h"
 
 #include "wordranger.h"
+#include "worddsranger.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -15,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    QObject::connect(ui->exitButton, &QPushButton::pressed, this, &MainWindow::close);
     QObject::connect(ui->b_wordRate, &QPushButton::pressed, this, &MainWindow::openFile);
     QObject::connect(ui->b_wordRateDs, &QPushButton::pressed, this, &MainWindow::openFile);
 
@@ -51,7 +53,8 @@ void MainWindow::openFile()
     {
         QString fileName = QFileDialog::getOpenFileName(0, "Open Dialog", "", "*.csv");
 
-        auto w = WareHouse::analise(WareHouse::WordDs, fileName);
+        auto w = new WordDsRanger();
+        w->setFileName(fileName);
         w->setTable(ui->tableWidget);
         w->start();
     }

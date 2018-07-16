@@ -54,6 +54,57 @@ void WordDsRanger::addPair(const QString &ds, const QString &word)
 
 void WordDsRanger::work()
 {
+    QFile f(this->m_fileName);
+
+    if (!f.exists())
+        return;
+
+    if (f.open(QIODevice::ReadOnly))
+    {
+        QTextStream stream(&f);
+        while (!stream.atEnd())
+        {
+            //11-ds
+            QString full = stream.readLine();
+            QStringList fullList = full.split(";");
+            QString dia = fullList.at(10);
+
+            QRegExp rx("\\w\\d+.\\d+");
+            QStringList list;
+            int pos = 0;
+
+            while ((pos = rx.indexIn(dia, pos)) != -1) {
+                list << rx.cap();
+                pos += rx.matchedLength();
+            }
+
+            if (list.count() == 1)
+            {
+                dia = list.first();
+
+                QString _s = fullList.at(13);
+                QStringList _list = _s.split(",", QString::SkipEmptyParts);
+
+                for (auto i : _list)
+                {
+                    for (auto j : i.split(QRegExp("\\W+"), QString::SkipEmptyParts))
+                    {
+                        if (!j.length())
+                            continue;
+
+                       addPair(dia, j);
+                    }
+                }
+            }
+
+//            qDebug() << list;
+        }
+
+        f.close();
+    }
+
+//Прорисовка таблицы
+
     if (!this->m_table)
         return;
 

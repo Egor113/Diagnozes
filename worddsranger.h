@@ -1,6 +1,8 @@
 #ifndef WORDDSRANGER_H
 #define WORDDSRANGER_H
 
+#include <QPair>
+
 #include "builder.h"
 
 struct Data {
