@@ -9,6 +9,7 @@
 #include "wordranger.h"
 #include "worddsranger.h"
 #include "dia.h"
+#include "graphicsform.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -19,10 +20,12 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->exitButton, &QPushButton::pressed, this, &MainWindow::close);
     QObject::connect(ui->b_wordRate, &QPushButton::pressed, this, &MainWindow::openFile);
     QObject::connect(ui->b_wordRateDs, &QPushButton::pressed, this, &MainWindow::openFile);
-    QObject::connect(ui->b_Dia,&QPushButton::pressed, this, &MainWindow::showdia);
+    QObject::connect(ui->b_Dia, &QPushButton::pressed, this, &MainWindow::showdia);
 
-    qRegisterMetaType< QVector<int> >("QVector<int>");
-    qRegisterMetaType< QItemSelection > ("QItemSelection");
+    QObject::connect(ui->tableWidget, &QTableWidget::cellClicked, this, &MainWindow::onCellClicked);
+
+//    qRegisterMetaType< QVector<int> >("QVector<int>");
+//    qRegisterMetaType< QItemSelection > ("QItemSelection");
 }
 
 MainWindow::~MainWindow()
@@ -34,6 +37,7 @@ void MainWindow::openFile()
 {
     m_item = Q_NULLPTR;
     auto sen = QObject::sender();
+
     //Возвращает указатель на объект, сигнала кот. мы попали в этот метод
     if (sen == ui->b_wordRate) //Если нажата кнопка "Определить частоту повторения слов"
     {
@@ -64,12 +68,12 @@ void MainWindow::openFile()
 
 void MainWindow::showdia()
 {
-    //if( dia != NULL) delete dia;
-    dia = new Dia();
     if (!m_item || ui->tableWidget->columnCount() != 3)
         return;
-    QVector <CurrWordDia> v_curr;
+
     QString text;
+    QVector<int> vec;
+    QStringList list;
 
     if (m_item->column() != 1)
         m_item = ui->tableWidget->item(m_item->row(), 1);
@@ -79,15 +83,26 @@ void MainWindow::showdia()
     {
         if (text.compare(ui->tableWidget->item(i, 1)->data(0).toString()) == 0)
         {
-            CurrWordDia w_curr;
-            w_curr.diagID = ui->tableWidget->item(i, 0)->data(0).toString();
-            w_curr.count = ui->tableWidget->item(i, 2)->data(0).toInt();
-            v_curr.push_back(w_curr);
+            vec.append(ui->tableWidget->item(i, 2)->data(0).toInt());
+            list.append(ui->tableWidget->item(i, 0)->data(0).toString());
         }
     }
-//  Формирование нового вектора (диагноз, кол-во повторений)
-    dia->setPlotParams(text,v_curr);
-    //w->setPlotParams(text,an.v_curr);
-    dia->show();
+
+    GraphicsForm * form = new GraphicsForm();
+    form->setAttribute(Qt::WA_DeleteOnClose);
+    QSize screenSize = qApp->desktop()->screen()->size();
+    form->setMinimumSize(screenSize.width()/2, screenSize.height()/2);
+    form->show();
+
+    QObject::connect(this, &MainWindow::dataReady, form, &GraphicsForm::setGraphData);
+    QObject::connect(this, &MainWindow::wordReady, form, &GraphicsForm::setGraphWord);
+
+    emit wordReady(text);
+    emit dataReady(vec, list);
+}
+
+void MainWindow::onCellClicked(int row, int column)
+{
+    m_item = ui->tableWidget->item(row, column);
 }
 

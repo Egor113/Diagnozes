@@ -7,6 +7,9 @@
 class Wordranger : public Builder
 {
 public:
+
+
+
     Wordranger();
 
     void addPair(const QString &str);

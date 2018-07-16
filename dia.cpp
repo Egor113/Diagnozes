@@ -21,6 +21,28 @@ void Dia::setPlotParams(QString str, QVector<CurrWordDia> vect)
     v = vect;
 }
 
+void Dia::setGraphWord(QString word)
+{
+    this->word = word;
+}
+
+void Dia::setGraphData(const QVector<int> &vec, const QStringList &ds)
+{
+    if (vec.size() != ds.count())
+        return;
+
+    auto it1 = vec.begin();
+    auto it2 = ds.begin();
+
+    for (; it1 != vec.end(); ++it1, ++it2)
+    {
+        CurrWordDia word;
+        word.count = (*it1);
+        word.diagID = (*it2);
+        v.append(word);
+    }
+}
+
 
 void Dia::on_pushButton_clicked()
 {

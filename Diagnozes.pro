@@ -22,7 +22,9 @@ SOURCES += main.cpp\
     qcustomplot.cpp \
     dia.cpp \
     worddsranger.cpp \
-    chainranger.cpp
+    chainranger.cpp \
+    graphicsform.cpp \
+    graph.cpp
 
 HEADERS  += mainwindow.h \
     warehouse.h \
@@ -33,7 +35,11 @@ HEADERS  += mainwindow.h \
     dia.h \
     worddsranger.h \
     chainranger.h \
-    chainranger.h
+    chainranger.h \
+    graphicsform.h \
+    graph.h \
+    source.h
 
 FORMS    += mainwindow.ui \
-    dia.ui
+    dia.ui \
+    graph.ui
