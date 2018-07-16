@@ -30,7 +30,8 @@ HEADERS  += mainwindow.h \
     wordranger.h \
     qcustomplot.h \
     dia.h \
-    worddsranger.h
+    worddsranger.h \
+    chainranger.h
 
 FORMS    += mainwindow.ui \
     dia.ui
