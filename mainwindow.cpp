@@ -11,6 +11,7 @@
 #include "dia.h"
 #include "graphicsform.h"
 #include "chainranger.h"
+#include "chaindsranger.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -22,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->b_wordRate, &QPushButton::pressed, this, &MainWindow::openFile);
     QObject::connect(ui->b_wordRateDs, &QPushButton::pressed, this, &MainWindow::openFile);
     QObject::connect(ui->b_expRate, &QPushButton::pressed, this, &MainWindow::openFile);
+    QObject::connect(ui->b_expRateDs, &QPushButton::pressed, this, &MainWindow::openFile);
     QObject::connect(ui->b_Dia, &QPushButton::pressed, this, &MainWindow::showdia);
 
     QObject::connect(ui->tableWidget, &QTableWidget::cellClicked, this, &MainWindow::onCellClicked);
@@ -71,6 +73,15 @@ void MainWindow::openFile()
         QString fileName = QFileDialog::getOpenFileName(0, "Open Dialog", "", "*.csv");
 
         auto w = new Chainranger();
+        w->setFileName(fileName);
+        w->setTable(ui->tableWidget);
+        w->start();
+    }
+    else if (sen == ui->b_expRateDs)
+    {
+        QString fileName = QFileDialog::getOpenFileName(0, "Open Dialog", "", "*.csv");
+
+        auto w = new Chaindsranger();
         w->setFileName(fileName);
         w->setTable(ui->tableWidget);
         w->start();

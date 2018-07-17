@@ -53,6 +53,7 @@ void Chainranger::work()
 
             for (auto i : _list)
             {
+                //Лишний пробел перед выражением!!!!!!!!!
                 for (auto j : i.split(QRegExp("\\((\\s+|\\w+|([а-я]|[А-Я])+){1,}\\)"), QString::SkipEmptyParts))
                 {
                     if (!j.length())

@@ -4,27 +4,9 @@
 #include <QPair>
 
 #include "builder.h"
+#include "source.h"
 
-struct Data {
-    QString ds;
-    QList < QPair<QString, int> > list;
-    double code() const {
-        QRegExp rx("\\d+.\\d+");
-        QString value;
-        int pos = 0;
 
-        while ((pos = rx.indexIn(ds, pos)) != -1) {
-            value = rx.cap();
-            pos += rx.matchedLength();
-        }
-
-        return value.toDouble();
-    }
-    bool operator >(const Data &other)
-    {
-        return this->code() > other.code();
-    }
-};
 
 class WordDsRanger : public Builder
 {
