@@ -98,6 +98,9 @@ void Chaindsranger::work()
     m_table->clear();
     m_table->setColumnCount(3);
     m_table->setRowCount(m_dataLength);
+    QStringList header;
+    header << "Диагноз" << "Симптомы" << "Количество повторов";
+    m_table->setHorizontalHeaderLabels(header);
 
     int count = 0;
 
