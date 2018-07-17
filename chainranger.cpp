@@ -53,7 +53,7 @@ void Chainranger::work()
 
             for (auto i : _list)
             {
-                for (auto j : i.split(QRegExp("\\W+"), QString::SkipEmptyParts))
+                for (auto j : i.split(QRegExp("\\((\\s+|\\w+|([а-я]|[А-Я])+){1,}\\)"), QString::SkipEmptyParts))
                 {
                     if (!j.length())
                         continue;
@@ -96,5 +96,7 @@ void Chainranger::work()
 
 void Chainranger::sort()
 {
-
+    qSort(m_wordPairs.begin(), m_wordPairs.end(), [](QPair<QString, int> &a, QPair<QString, int> &b){
+        return a.second > b.second;
+    });
 }
