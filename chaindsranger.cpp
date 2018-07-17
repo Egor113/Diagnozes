@@ -75,7 +75,10 @@ void Chaindsranger::work()
                     {
                         if (!j.length())
                             continue;
-
+                        while (j[0] == ' ')
+                        {
+                            j.remove(0,1);//Удаление пробела
+                        }
                         addPair(dia, j);
                     }
                 }
