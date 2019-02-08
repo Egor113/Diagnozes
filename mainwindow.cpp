@@ -45,6 +45,7 @@ void MainWindow::openFile()
         auto w = new Wordranger();
         w->setFileName(fileName);
         w->setTable(ui->tableWidget);
+        w->setType("wordranger");
         w->start();
     }
     else if (sen == ui->b_wordRateDs)
@@ -54,6 +55,7 @@ void MainWindow::openFile()
         auto w = new WordDsRanger();
         w->setFileName(fileName);
         w->setTable(ui->tableWidget);
+        w->setType("worddsranger");
         w->start();
     }
     else if (sen == ui->b_expRate)
@@ -63,6 +65,7 @@ void MainWindow::openFile()
         auto w = new Chainranger();
         w->setFileName(fileName);
         w->setTable(ui->tableWidget);
+        w->setType("chainranger");
         w->start();
     }
     else if (sen == ui->b_expRateDs)
@@ -72,6 +75,7 @@ void MainWindow::openFile()
         auto w = new Chaindsranger();
         w->setFileName(fileName);
         w->setTable(ui->tableWidget);
+        w->setType("chaindsranger");
         w->start();
     }
 }

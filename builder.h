@@ -19,6 +19,12 @@ public:
     inline void setTable(QTableWidget *t) { m_table = t; }
     inline void setFileName(const QString &file) { m_fileName = file; }
 
+    QString type;
+
+    void setType(QString type){
+       this->type = type;
+    }
+
 public slots:
     void start() { work(); }
 

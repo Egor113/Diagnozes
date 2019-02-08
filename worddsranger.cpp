@@ -94,7 +94,12 @@ void WordDsRanger::work()
     m_table->setColumnCount(3);
     m_table->setRowCount(m_dataLength);
     QStringList header;
-    header << "Диагноз" << "Слова" << "Количество повторов";
+    if (this->type == "worddsranger"){
+        header << "Диагноз" << "Слова" << "Количество повторов";
+    }
+    else {
+        header << "Диагноз" << "Симптомы" << "Количество повторов";
+    }
     m_table->setHorizontalHeaderLabels(header);
 
     int count = 0;

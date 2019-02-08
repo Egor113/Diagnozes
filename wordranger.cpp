@@ -67,7 +67,13 @@ void Wordranger::work()
     m_table->setColumnCount(2);
     m_table->setRowCount(m_wordPairs.count());
     QStringList header;
-    header << "Слова" << "Количество повторов";
+
+    if (this->type == "wordranger"){
+        header << "Слова" << "Количество повторов";
+    }
+    else {
+        header << "Симтомы" << "Количество повторов";
+    }
     m_table->setHorizontalHeaderLabels(header);
 
     int count = 0;
