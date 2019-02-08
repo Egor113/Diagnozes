@@ -6,8 +6,6 @@
 #include <QFile>
 #include <QTextStream>
 
-#include "source.h"
-
 class Builder : public QObject
 {
     Q_OBJECT

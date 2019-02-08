@@ -15,6 +15,8 @@ CONFIG += c++11
 
 SOURCES += main.cpp\
         mainwindow.cpp \
+    warehouse.cpp \
+    worker.cpp \
     builder.cpp \
     wordranger.cpp \
     qcustomplot.cpp \
@@ -26,6 +28,8 @@ SOURCES += main.cpp\
     chaindsranger.cpp
 
 HEADERS  += mainwindow.h \
+    warehouse.h \
+    worker.h \
     builder.h \
     wordranger.h \
     qcustomplot.h \

@@ -1,7 +1,5 @@
 #include "mainwindow.h"
 #include <QApplication>
-#include <QFile>
-#include <QDebug>
 
 #include "dia.h"
 #include "graph.h"
@@ -14,6 +12,10 @@ int main(int argc, char *argv[])
     MainWindow w;
 //    w.showMaximized();
     w.show();
+
+//    Dia *
+
+
 
     return a.exec();
 }

@@ -1,42 +1,154 @@
 #include "chaindsranger.h"
 
-Chaindsranger::Chaindsranger()
+Chaindsranger::Chaindsranger(): m_dataLength(0)
 {
-    this->m_dataLength = 0;
+
 }
 
+void Chaindsranger::addPair(const QString &ds, const QString &word)
+{
+    for (auto i: m_data)
+    {
+        if (i->ds.compare(ds, Qt::CaseInsensitive) == 0)
+        {
+            bool found = false;
+
+            for (auto j = i->list.begin(); j != i->list.end(); ++j)
+            {
+                if ((*j).first.compare(word, Qt::CaseInsensitive) == 0)
+                {
+                    (*j).second++;
+                    return;
+                }
+            }
+
+            if (!found)
+            {
+                i->list.append(QPair<QString, int>(word, 1));
+                m_dataLength++;
+                return;
+            }
+        }
+    }
+
+    auto d = new Data();
+    d->ds = ds;
+    d->list.append(QPair<QString, int>(word, 1));
+    m_data.append(d);
+}
 void Chaindsranger::work()
 {
-    WordDsRanger::work();
-}
+    QFile f(this->m_fileName);
 
-void Chaindsranger::chainMake(QString dia, QString &str)
-{
-    QRegExp rx("\\(((\\s+|\\w+|([а-яА-Я,-\\/]+)+){1,})\\)");
-    int pos = 0;
+    if (!f.exists())
+        return;
 
-    while((pos = rx.indexIn(str,pos)) != -1)
+    if (f.open(QIODevice::ReadOnly))
     {
-        QString word;
-        word = rx.cap();
-        word.remove(QRegExp("\\(|\\)"));
-        chainMake(dia, word);
-        str.remove(pos, rx.matchedLength());
-        str.insert(pos, ",");
-        if (word.count())
-            pos = 0;
-        else
-            pos += rx.matchedLength();
+        QTextStream stream(&f);
+        while (!stream.atEnd())
+        {
+            //11-ds
+            QString full = stream.readLine();
+            QStringList fullList = full.split(";");
+            QString dia = fullList.at(10);
+
+            QRegExp rx("\\w\\d+.\\d+");
+            QStringList list;
+            int pos = 0;
+
+            while ((pos = rx.indexIn(dia, pos)) != -1) {
+                list << rx.cap();
+                pos += rx.matchedLength();
+            }
+
+            if (list.count() == 1)
+            {
+                dia = list.first();
+
+                QString _s = fullList.at(13);
+                QStringList _list = _s.split(",", QString::SkipEmptyParts);
+
+                for (auto i : _list)
+                {
+                    for (auto j : i.split(QRegExp("\\((\\s+|\\w+|([а-я]|[А-Я])+){1,}\\)"), QString::SkipEmptyParts))
+                    {
+                        if (!j.length())
+                            continue;
+                        while (j[0] == ' ')
+                        {
+                            j.remove(0,1);//Удаление пробела
+                        }
+                        addPair(dia, j);
+                    }
+                }
+            }
+
+            //            qDebug() << list;
+        }
+
+        f.close();
     }
 
-    str.remove(QRegExp("\\(\\)"));
+    //Прорисовка таблицы
 
-    for (auto s : str.split(QRegExp(",|-"), QString::SkipEmptyParts))
+    if (!this->m_table)
+        return;
+
+    m_table->clear();
+    m_table->setColumnCount(3);
+    m_table->setRowCount(m_dataLength);
+    QStringList header;
+    header << "Диагноз" << "Симптомы" << "Количество повторов";
+    m_table->setHorizontalHeaderLabels(header);
+
+    int count = 0;
+
+
+    qDebug() << count;
+
+    for (auto i : m_data)
     {
-        if (s.length() < 3)
-            continue;
 
-        addPair(dia, s.remove(QRegExp("^\\s+|\\.|\"")));
+        for (auto j : i->list)
+        {
+            auto f = new QTableWidgetItem(i->ds);
+            auto m = new QTableWidgetItem(j.first);
+            auto s = new QTableWidgetItem(QString::number(j.second));
+
+            m_table->setItem(count, 0, f);
+            m_table->setItem(count, 1, m);
+            m_table->setItem(count, 2, s);
+            count++;
+        }
+
     }
 }
+
+//void Chaindsranger::sort()
+//{
+//    qSort(m_wordDsMap.begin(), m_wordDsMap.end(), [](QPair<QString, QList< QPair<QString, int> > > &a,
+//          QPair<QString, QList< QPair<QString, int> > > &b) {
+
+//        QRegExp rx("\\d+.\\d+");
+//        QStringList listA, listB;
+//        int pos = 0;
+
+//        while ((pos = rx.indexIn(a.first, pos)) != -1) {
+//            listA << rx.cap();
+//            pos += rx.matchedLength();
+//        }
+
+//        pos = 0;
+
+//        while ((pos = rx.indexIn(b.first, pos)) != -1) {
+//            listB << rx.cap();
+//            pos += rx.matchedLength();
+//        }
+//        //qDebug() << listA << listB;
+
+//        return listA.first().toDouble() > listB.first().toDouble();
+//    });
+//}
+
 

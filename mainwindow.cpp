@@ -4,6 +4,8 @@
 #include <QDebug>
 #include <QFileDialog>
 
+#include "warehouse.h"
+#include "worker.h"
 #include "wordranger.h"
 #include "worddsranger.h"
 #include "dia.h"
@@ -25,6 +27,9 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->b_Dia, &QPushButton::pressed, this, &MainWindow::showdia);
 
     QObject::connect(ui->tableWidget, &QTableWidget::cellClicked, this, &MainWindow::onCellClicked);
+
+//    qRegisterMetaType< QVector<int> >("QVector<int>");
+//    qRegisterMetaType< QItemSelection > ("QItemSelection");
 }
 
 MainWindow::~MainWindow()
@@ -43,8 +48,15 @@ void MainWindow::openFile()
         QString fileName = QFileDialog::getOpenFileName(0, "Open Dialog", "", "*.csv");
 
         auto w = new Wordranger();
+//        QThread * thread = new QThread;
         w->setFileName(fileName);
         w->setTable(ui->tableWidget);
+//        w->moveToThread(thread);
+
+//        QObject::connect(thread, &QThread::started, w, &Wordranger::start);
+//        QObject::connect(w, &Wordranger::finished, thread, &QThread::quit);
+
+//        thread->start(QThread::HighestPriority);
         w->start();
     }
     else if (sen == ui->b_wordRateDs)
