@@ -7,103 +7,38 @@ Chainranger::Chainranger()
 
 }
 
-void Chainranger::addPair(const QString &str)
-{
-    bool founded = false;
-
-    for (auto i = m_wordPairs.begin(); i != m_wordPairs.end(); ++i)
-    {
-        if (!(*i).first.compare(str, Qt::CaseInsensitive))
-        {
-            (*i).second++;
-            return;
-        }
-    }
-
-    if (!founded)
-    {
-        m_wordPairs.append(QPair<QString, int>(str, 1));
-    }
-}
-
 void Chainranger::work()
 {
-    QFile f(this->m_fileName);
-
-    if (!f.exists())
-        return;
-
-    if (f.open(QIODevice::ReadOnly))
-    {
-        QTextStream stream(&f);
-
-        bool firstLine = false;
-        while (!stream.atEnd() && !firstLine)
-        {
-            stream.readLine();
-            firstLine = true;
-        }
-
-        while (!stream.atEnd())
-        {
-            QString s = stream.readLine();
-            QStringList list = s.split(";");
-            QString _s = list.at(13);
-            QStringList _list = _s.split(",", QString::SkipEmptyParts);
-
-            for (auto i : _list)
-            {
-                //Лишний пробел перед выражением!!!!!!!!!
-                for (auto j : i.split(QRegExp("\\((\\s+|\\w+|([а-я]|[А-Я])+){1,}\\)"), QString::SkipEmptyParts))
-                {
-                    if (!j.length())
-                        continue;
-                    while (j[0] == ' ')
-                    {
-                        j.remove(0,1);//Удаление пробела
-                    }
-                    addPair(j);
-                }
-            }
-        }
-
-        f.close();
-    }
-
-//Прорисовка таблицы
-
-    if (!this->m_table)
-        return;
-
-    m_table->clear();
-    m_table->setColumnCount(2);
-    m_table->setRowCount(m_wordPairs.count());
-    QStringList header;
-    header << "Симптомы" << "Количество повторов";
-    m_table->setHorizontalHeaderLabels(header);
-
-    int count = 0;
-    qDebug() << m_wordPairs.count();
-    sort();
-
-    for (auto i : m_wordPairs)
-    {
-        auto f = new QTableWidgetItem(i.first);
-        auto s = new QTableWidgetItem(QString::number(i.second));
-
-        m_table->setItem(count, 0, f);
-        m_table->setItem(count, 1, s);
-
-        count++;
-        qDebug() << count;
-    }
-    qDebug() << "Some";
-    emit finished();
+    Wordranger::work();
 }
 
-void Chainranger::sort()
+void Chainranger::chainMake(QString &str)
 {
-    qSort(m_wordPairs.begin(), m_wordPairs.end(), [](QPair<QString, int> &a, QPair<QString, int> &b){
-        return a.second > b.second;
-    });
+    QRegExp rx("\\(((\\s+|\\w+|([а-яА-Я,-\\/]+)+){1,})\\)");
+    int pos = 0;
+
+    while((pos = rx.indexIn(str,pos)) != -1)
+    {
+        QString word;
+        word = rx.cap();
+        word.remove(QRegExp("\\(|\\)"));
+        chainMake(word);
+        str.remove(pos, rx.matchedLength());
+        str.insert(pos, ",");
+        if (word.count())
+            pos = 0;
+        else
+            pos += rx.matchedLength();
+    }
+
+    str.remove(QRegExp("\\(\\)"));
+
+    for (auto s : str.split(QRegExp(",|-"), QString::SkipEmptyParts))
+    {
+        if (s.length() < 3)
+            continue;
+
+        addPair(s.remove(QRegExp("^\\s+|\\.|\"")));
+    }
 }
+

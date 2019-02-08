@@ -4,29 +4,21 @@
 #include <QPair>
 #include <QDebug>
 
-#include "builder.h"
-#include "source.h"
+#include "worddsranger.h"
 
-
-
-class Chaindsranger:  public Builder
+class Chaindsranger:  public WordDsRanger
 {
 public:
     Chaindsranger();
-    //void addRecord(const QString &ds, const QString &word); // К удалению
-    void addPair(const QString &ds, const QString &word);
 
 protected:
 
-    // Builder interface
-        void work();
-private:
-        QList< QPair<QString, QList< QPair<QString, int> > > > m_wordDsMap; // К Удалению
-        QList<Data*> m_data;
+// Builder interface
+    void work();
 
-        //void sort();
+// WordDsRanger interface
+    void chainMake(QString dia, QString &str);
 
-        int m_dataLength;
 };
 
 #endif // CHAINDSRANGER_H
