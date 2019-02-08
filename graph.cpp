@@ -123,8 +123,9 @@ void Graph::printGraph()
     ui->graphWidget->xAxis->setRange(xMin, xMax);
     ui->graphWidget->yAxis->setRange(yMin, yMax);
 
+    ui->graphWidget->xAxis->setLabel("Количество повторений в диагнозе");
+    ui->graphWidget->yAxis->setLabel("Значение функции нормального распределения");
     ui->graphWidget->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
-
     ui->graphWidget->replot();
 }
 
