@@ -1,5 +1,7 @@
 #include "wordranger.h"
+
 #include <QDebug>
+
 Wordranger::Wordranger()
 {
 
@@ -47,18 +49,10 @@ void Wordranger::work()
             QString s = stream.readLine();
             QStringList list = s.split(";");
             QString _s = list.at(13);
-            QStringList _list = _s.split(",", QString::SkipEmptyParts);
 
-            for (auto i : _list)
-            {
-                for (auto j : i.split(QRegExp("\\W+"), QString::SkipEmptyParts))
-                {
-                    if (!j.length())
-                        continue;
+            Source::removeUselessBrackets(_s);
 
-                    addPair(j);
-                }
-            }
+            chainMake(_s);
         }
 
         f.close();
@@ -93,6 +87,22 @@ void Wordranger::work()
     }
     qDebug() << "Some";
     emit finished();
+}
+
+void Wordranger::chainMake(QString &str)
+{
+    QStringList _list = str.split(",", QString::SkipEmptyParts);
+
+    for (auto i : _list)
+    {
+        for (auto j : i.split(QRegExp("\\W+"), QString::SkipEmptyParts))
+        {
+            if (j.length() < 3)
+                continue;
+
+            addPair(j);
+        }
+    }
 }
 
 void Wordranger::sort()

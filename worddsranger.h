@@ -4,9 +4,6 @@
 #include <QPair>
 
 #include "builder.h"
-#include "source.h"
-
-
 
 class WordDsRanger : public Builder
 {
@@ -14,7 +11,6 @@ public:
     WordDsRanger();
     ~WordDsRanger();
 
-    void addRecord(const QString &ds, const QString &word); // К удалению
     void addPair(const QString &ds, const QString &word);
 
 protected:
@@ -22,13 +18,17 @@ protected:
 // Builder interface
     void work();
 
+    virtual void chainMake(QString dia, QString &str);
+
+    int m_dataLength;
+
 private:
-    QList< QPair<QString, QList< QPair<QString, int> > > > m_wordDsMap; // К Удалению
     QList<Data*> m_data;
 
     void sort();
+    void sordDs();
+    bool static dsIsBigger(QString s1, QString s2);
 
-    int m_dataLength;
 };
 
 #endif // WORDDSRANGER_H

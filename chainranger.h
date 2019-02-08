@@ -2,23 +2,25 @@
 #define CHAINRANGER_H
 
 #include <QPair>
-#include "builder.h"
 
-class Chainranger : public Builder
+#include "wordranger.h"
+
+class Chainranger : public Wordranger
 {
 public:
     Chainranger();
 
-    void addPair(const QString &str);
-
 protected:
 
-    // Builder interface
-        void work();
+// Builder interface
+    void work();
+
+// Wordranger interface
+    void chainMake(QString &str);
+
 private:
     QList< QPair<QString, int> > m_wordPairs;
 
-    void sort();
 };
 
 #endif // CHAINRANGER_H
