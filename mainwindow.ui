@@ -21,32 +21,65 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QPushButton" name="b_wordRate">
-        <property name="text">
-         <string>Определить частоту повторения слов</string>
-        </property>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Режимы анализа файлов</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="b_wordRate">
+          <property name="text">
+           <string>Определить частоту повторения слов</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="b_expRate">
+          <property name="text">
+           <string>Определить частоту повторения выражений</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="b_expRateDs">
+          <property name="text">
+           <string>Определить частоту повторения выражений с учетом диагноза</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="b_wordRateDs">
+          <property name="text">
+           <string>Определить частоту повторения слов с учетом диагноза</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item>
-       <widget class="QPushButton" name="b_wordRateDs">
-        <property name="text">
-         <string>Определить частоту повторения слов с учетом диагноза</string>
+       <spacer name="verticalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="b_expRate">
-        <property name="text">
-         <string>Определить частоту повторения выражений</string>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="b_expRateDs">
-        <property name="text">
-         <string>Определить частоту повторения выражений с учетом диагноза</string>
-        </property>
-       </widget>
+       </spacer>
       </item>
       <item>
        <widget class="QPushButton" name="b_Dia">
