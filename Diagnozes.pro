@@ -23,8 +23,7 @@ SOURCES += main.cpp\
     chainranger.cpp \
     graphicsform.cpp \
     graph.cpp \
-    chaindsranger.cpp \
-    histogram.cpp
+    chaindsranger.cpp
 
 HEADERS  += mainwindow.h \
     builder.h \
@@ -37,8 +36,7 @@ HEADERS  += mainwindow.h \
     graphicsform.h \
     graph.h \
     source.h \
-    chaindsranger.h \
-    histogram.h
+    chaindsranger.h
 
 FORMS    += mainwindow.ui \
     dia.ui \
