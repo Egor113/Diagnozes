@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Анализатор диагнозов врачей</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -31,7 +31,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Режимы анализа файлов</string>
+           <string>Режимы анализа файла</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -53,16 +53,16 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="b_expRateDs">
+         <widget class="QPushButton" name="b_wordRateDs">
           <property name="text">
-           <string>Определить частоту повторения выражений с учетом диагноза</string>
+           <string>Определить частоту повторения слов с учетом диагноза</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="b_wordRateDs">
+         <widget class="QPushButton" name="b_expRateDs">
           <property name="text">
-           <string>Определить частоту повторения слов с учетом диагноза</string>
+           <string>Определить частоту повторения выражений с учетом диагноза</string>
           </property>
          </widget>
         </item>

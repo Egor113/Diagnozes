@@ -120,3 +120,5 @@ void MainWindow::onCellClicked(int row, int column)
     m_item = ui->tableWidget->item(row, column);
 }
 
+
+
