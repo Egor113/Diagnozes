@@ -52,8 +52,6 @@ void Dia::on_pushButton_clicked()
 
      fossil = new QCPBars(customPlot->xAxis, customPlot->yAxis);
 
-     //customPlot->addPlottable(fossil);
-     //customPlot->addPlottable(fossil);
      // Установки цвета:
      QPen pen;
      pen.setWidthF(1.5);//Толщина контура столбца
@@ -83,19 +81,6 @@ void Dia::on_pushButton_clicked()
      customPlot->xAxis->setTicker(textTicker);
      customPlot->xAxis->setTickLabelRotation(60); // Повернем на 60 градусов
 
-     // !!!
-
-
- //    ticks << 1 << 2 << 3 << 4 << 5 << 6 << 7;
- //    labels << "1" << "2" << "3" << "4" << "5" << "6" << "7";
- //    customPlot->xAxis->setAutoTicks(false);
- //    customPlot->xAxis->setAutoTickLabels(false);
- //    customPlot->xAxis->setTickVector(ticks);
- //    customPlot->xAxis->setTickVectorLabels(labels);
- //      customPlot->xAxis->setupTickVectors();
- //    customPlot->xAxis->setSubTickCount(0);
- //    customPlot->xAxis->setLabel(QString::fromUtf8("Диагнозы"));
-     //customPlot->xAxis->setupTickVectors();
      customPlot->xAxis->setTickLength(0, 4);
      customPlot->xAxis->grid()->setVisible(true);
      customPlot->xAxis->setRange(0, v.size()+1);
@@ -117,14 +102,7 @@ void Dia::on_pushButton_clicked()
      QVector<double> fossilData;
      for(int i = 0; i < v.size(); ++i)
          fossilData.append((double)(v[i].count));
- //    qsrand (time(NULL));
- //    fossilData  << qrand() % 10 + 2.5
- //                << qrand() % 10 + 2.5
- //                << qrand() % 10 + 2.5
- //                << qrand() % 10 + 2.5
- //                << qrand() % 10 + 2.5
- //                << qrand() % 10 + 2.5
- //                << qrand() % 10 + 2.5;
+
      fossil->setData(ticks, fossilData);
 
      // Легенда:
