@@ -64,6 +64,9 @@ void Dia::on_pushButton_clicked()
      fossil->setBrush(QColor(50, 50, 250, 70));
 
      // Установки значений оси X:
+
+     sort();
+
      QVector<double> ticks;
      QVector<QString> labels;
      for(int i = 0; i < v.size(); ++i) {
@@ -140,4 +143,14 @@ void Dia::on_pushButton_clicked()
      // Сброс всех установок графика:
      customPlot->removePlottable(fossil);
 
+}
+
+void Dia::sort()
+{
+    qSort(v.begin(), v.end(), sortCondition);
+}
+
+bool Dia::sortCondition(CurrWordDia c1, CurrWordDia c2)
+{
+    return c1.count > c2.count;
 }

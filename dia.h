@@ -34,6 +34,8 @@ private:
 
     QString word; //Строка для храения слова (выражения)
     QVector<CurrWordDia> v; //Вектор для хранения диагноза и частоты
+    void sort();
+    bool static sortCondition(CurrWordDia c1, CurrWordDia c2);
 };
 
 #endif // DIA_H
