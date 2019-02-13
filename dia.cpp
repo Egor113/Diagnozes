@@ -101,7 +101,7 @@ void Dia::on_pushButton_clicked()
      // Данные:
      QVector<double> fossilData;
      for(int i = 0; i < v.size(); ++i)
-         fossilData.append((double)(v[i].count));
+         fossilData.append(static_cast<double>( (v[i].count)) );
 
      fossil->setData(ticks, fossilData);
 
